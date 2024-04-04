@@ -11,9 +11,5 @@ import MovieDetailsPage from './pages/MovieDetailsPage';
 import MoviesPage from './pages/MoviesPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-function App() {
-  const Users = [users, setUsers];
-  
-}
-
 export default App;
+
