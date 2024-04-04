@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import { NavLink, Route, Routes } from "react-router-dom";
 import clsx from "clsx";
+import { Suspense, lazy } from "react";
 
 import MovieCast from './components/MovieCast/MovieCast';
 import MovieReviews from './components/MovieReviews/MovieReviews';
