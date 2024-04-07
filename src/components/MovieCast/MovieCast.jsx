@@ -1,3 +1,5 @@
-import from '../components/MovieCast';
-import from '../components/MovieList';
-import from '../components/Navigation';
+const MovieCast = () => {
+  return <div>MovieCast</div>;
+};
+
+export default MovieCast;

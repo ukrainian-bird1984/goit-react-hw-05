@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
+import css from "./NotFoundPage.module.css";
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div>
-      <h1>Page you visited doesn&apos;t exist.</h1>
-      <Link to="/">Go Home</Link>
+      <p className={css.allert}>error</p>
+      <p className={css.page}>Page not found!</p>
+      <Link to="/" className={css.url}>
+        Go Home
+      </Link>
     </div>
   );
 };
 
-export default NotFound;
+export default NotFoundPage;
