@@ -9,20 +9,20 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
- // useEffect(() => {
-  // setLoading(true);
-  // const searchByTrendingCountries = async () => {
-  // try {
-    // const data = await searchTrendingMovies();
-      // setMovies(data.results);
-     // } catch (error) {
-      // setError(error.message);
-     // } finally {
-     //  setLoading(false);
-     // }
-  // };
-   // searchByTrendingCountries();
-   // }, []);
+useEffect(() => {
+setLoading(true);
+const searchByTrendingCountries = async () => {
+try {
+const data = await searchTrendingMovies();
+setMovies(data.results);
+} catch (error) {
+setError(error.message);
+} finally {
+setLoading(false);
+}
+};
+  searchByTrendingCountries();
+  }, []);
 
   return (
     <section className={css.section}>
