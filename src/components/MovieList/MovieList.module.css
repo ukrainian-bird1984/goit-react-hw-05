@@ -1,22 +1,21 @@
+.section {
+  padding: 20px;
+}
+
 .list {
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
-.item {
-    list-style-type: none;
+.list li {
+  margin-bottom: 10px;
 }
 
-.item li {
-    margin-bottom: 10px;
+.link {
+  color: #38b6a1; 
+  text-decoration: none;
 }
 
-.item li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-}
-
-.item li a:hover {
-    color: #007bff;
+.link:hover {
+  text-decoration: underline;
 }

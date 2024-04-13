@@ -5,8 +5,8 @@ import css from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
-    <header className={css.navigation}>
-      <nav className={css.name}>
+    <header className={css.header}>
+      <nav className={css.navigation}>
         <NavLink
           className={({ isActive }) =>
             clsx(css.link, { [css.active]: isActive })

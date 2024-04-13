@@ -1,3 +1,32 @@
 .error {
     color: red;
+    font-weight: bold;
+}
+
+.link {
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.infoContainer {
+    margin-top: 20px;
+}
+
+.listLink {
+    list-style: none;
+    padding: 0;
+}
+
+.listLink li {
+    margin-bottom: 5px;
+}
+
+.listLink li a {
+    color: blue;
+    text-decoration: underline;
+}
+
+.listLink li a:hover {
+    color: darkblue;
 }

@@ -1,37 +1,32 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_KEY = "fd646b286994ef3bdd547adceaf077d2";
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
-
-const options = {
-  headers: {
-    Authorization:
-      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZDY0NmIyODY5OTRlZjNiZGQ1NDdhZGNlYWYwNzdkMiIsInN1YiI6IjY2MGM2ZmQyMzU4MThmMDE2MjM5ZDMwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.YonGs0X73UlO6BELyy6K4Ho1NQxQYpgOjem7vqTSR0A",
-  },
+axios.defaults.headers = {
+  Authorization:
+    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzM5YzNiNGI0ZGY1MzQxY2ZkYWZhZDdjZjM0YzJlNSIsInN1YiI6IjY2MGM2ZmQyMzU4MThmMDE2MjM5ZDMwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TbIk8i4m4enYkLh9MTz02xkR8dmgLF8oP6zYcQMKb5A",
 };
 
 export const searchTrendingMovies = async () => {
-  const response = await axios.get(
-    `/trending/movie/day?api_key=${API_KEY}`,
-    options
-  );
-  return response.data;
+  const { data } = await axios.get(`/trending/movie/day`);
+  return data.results;
 };
 
-export const searchMovies = async (query) => {
-  const response = await axios.get(
-    `/search/movie?api_key=${API_KEY}&query=${query}`
-  );
-  return response.data;
+export const searchMoviesByQuery = async (query) => {
+  const { data } = await axios.get(`/search/movie?query=${query}`);
+  return data.results;
 };
-
 
 export const searchMovieDetails = async (movieId) => {
-  const response = await axios.get(`movie/${movieId}?api_key${API_KEY}`);
-  return response.data;
+  const { data } = await axios.get(`movie/${movieId}`);
+  return data;
 };
 
 export const searchMovieCredits = async (movieId) => {
   const { data } = await axios.get(`movie/${movieId}/credits`);
   return data.cast;
+};
+
+export const searchMovieReviews = async (movieId) => {
+  const { data } = await axios.get(`movie/${movieId}/reviews`);
+  return data.results;
 };

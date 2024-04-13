@@ -5,31 +5,31 @@ import Loader from "../../components/Loader/Loader";
 import css from "./HomePage.module.css";
 
 const HomePage = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-useEffect(() => {
-setLoading(true);
-const searchByTrendingCountries = async () => {
-try {
-const data = await searchTrendingMovies();
-setMovies(data.results);
-} catch (error) {
-setError(error.message);
-} finally {
-setLoading(false);
-}
-};
-  searchByTrendingCountries();
+  useEffect(() => {
+    setLoading(true);
+    const searchByTrendingCountries = async () => {
+      try {
+        const data = await searchTrendingMovies();
+        setMovies(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    searchByTrendingCountries();
   }, []);
 
   return (
     <section className={css.section}>
-      <h2 className={css.text}>Trending today</h2>
+      <h2 className={css.name}>Trending today</h2>
       {loading && <Loader />}
       {error && <p className={css.error}>{error}</p>}
-      {movies.length > 0 && <MovieList movies={movies} />}
+      {movies && <MovieList movies={movies} />}
     </section>
   );
 };

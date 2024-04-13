@@ -1,52 +1,57 @@
-import { Link, useParams, useLocation } from "react-router-dom";
-import MovieList from "../../components/MovieList/MovieList";
-import { useEffect, useState, useRef } from "react";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { Suspense, useEffect, useRef, useState } from "react";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
-import { searchMovies } from "../../helpers/searchMoviesApi";
+import { searchMovieDetails } from "../../helpers/searchMoviesApi";
 import css from "./MovieDetailsPage.module.css";
+import Loader from "../../components/Loader/Loader";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const location = useLocation();
   const [movies, setMovies] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const isMounted = useRef(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const location = useLocation();
+  const backLink = useRef(location.state?.from ?? "/");
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+    if (!movieId) return;
+    setLoading(true);
+    const searchMovies = async () => {
       try {
-        setLoading(true);
-        const response = await searchMovies(movieId);
-        if (isMounted.current) {
-          setMovies(response.results[0]);
-          setLoading(false);
-        }
+        const data = await searchMovieDetails(movieId);
+        setMovies(data);
       } catch (error) {
-        if (isMounted.current) {
-          setError(error.message);
-          setLoading(false);
-        }
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-
-    fetchMovieDetails();
-
-    return () => {
-      isMounted.current = false;
-    };
+    searchMovies();
   }, [movieId]);
 
   return (
     <div>
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       {error && <p className={css.error}>{error}</p>}
-      {movies && (
-        <>
-          <MovieDetails movie={movies} />
-          <Link to={location.state?.from || "/movies"}>Go back</Link>
-        </>
-      )}
+      <Link className={css.link} to={backLink.current}>
+        Go back
+      </Link>
+      {movies && <MovieDetails movies={movies} />}
+      <div className={css.infoContainer}>
+        <p>Additional information</p>
+        <ul className={css.listLink}>
+          <li>
+            <Link to="cast">Cast</Link>
+          </li>
+          <li>
+            <Link to="reviews">Reviews</Link>
+          </li>
+        </ul>
+      </div>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const MoviesForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className={css.submit}>
       <input
-        className={css.text}
+        className={css.type}
         type="text"
         name="name"
         placeholder="Search movies..."
