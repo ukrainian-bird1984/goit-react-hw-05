@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { searchMovieCredits } from "../../helpers/searchMoviesApi";
 import Loader from "../Loader/Loader";
-import css from "./MovieCast.module.css";
 
 const defaultImg =
   "https://vovkasolovev.ru/wp-content/uploads/2019/04/marvel-full-movie-list.jpg";
