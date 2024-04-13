@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import MoviesForm from "../../components/MoviesForm/MoviesForm";
 import { useEffect, useState } from "react";
 import { searchMovies } from "../../helpers/searchMoviesApi";
@@ -8,23 +8,17 @@ import MovieList from "../../components/MovieList/MovieList";
 
 const MoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query");
 
-  const { movieId } = useParams();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  console.log(movieId);
-
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(movieId.toLowerCase())
-  );
 
   useEffect(() => {
-    if (!movieId) return;
     setLoading(true);
     const searchMoviesByQuery = async () => {
       try {
-        const data = await searchMovies(searchParams.get("query"));
+        const data = await searchMovies(query);
         setMovies(data.results);
       } catch (error) {
         setError(error.message);
@@ -32,8 +26,13 @@ const MoviesPage = () => {
         setLoading(false);
       }
     };
-    searchMoviesByQuery();
-  }, [movieId]);
+
+    if (query) {
+      searchMoviesByQuery();
+    } else {
+      setMovies([]);
+    }
+  }, [query]);
 
   const handleSubmit = (value) => {
     setSearchParams({ query: value });
@@ -44,7 +43,7 @@ const MoviesPage = () => {
       {loading && <Loader />}
       {error && <p className={css.error}>{error}</p>}
       <MoviesForm onSubmit={handleSubmit} />
-      <MovieList movies={filteredMovies} />
+      <MovieList movies={movies} />
     </>
   );
 };

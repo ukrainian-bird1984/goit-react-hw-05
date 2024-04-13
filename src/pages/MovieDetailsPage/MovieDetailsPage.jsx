@@ -1,33 +1,52 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import MovieList from "../../components/MovieList/MovieList";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
 import { searchMovies } from "../../helpers/searchMoviesApi";
 import css from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const location = useLocation();
+  const [movies, setMovies] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    setLoading(true);
-    const searchMoviesDetails = async () => {
+    const fetchMovieDetails = async () => {
       try {
+        setLoading(true);
         const response = await searchMovies(movieId);
-        setMovies(response.result);
+        if (isMounted.current) {
+          setMovies(response.results[0]);
+          setLoading(false);
+        }
       } catch (error) {
-        setError(error.message);
+        if (isMounted.current) {
+          setError(error.message);
+          setLoading(false);
+        }
       }
     };
-    searchMoviesDetails();
+
+    fetchMovieDetails();
+
+    return () => {
+      isMounted.current = false;
+    };
   }, [movieId]);
 
   return (
     <div>
-      {loading && <MovieDetails movies={movies} />}
+      {loading && <p>Loading...</p>}
       {error && <p className={css.error}>{error}</p>}
+      {movies && (
+        <>
+          <MovieDetails movie={movies} />
+          <Link to={location.state?.from || "/movies"}>Go back</Link>
+        </>
+      )}
     </div>
   );
 };
