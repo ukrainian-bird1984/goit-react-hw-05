@@ -1,9 +1,12 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
+axios.defaults.params = {
+  language: "en-US",
+};
 axios.defaults.headers = {
   Authorization:
-    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzM5YzNiNGI0ZGY1MzQxY2ZkYWZhZDdjZjM0YzJlNSIsInN1YiI6IjY2MGM2ZmQyMzU4MThmMDE2MjM5ZDMwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TbIk8i4m4enYkLh9MTz02xkR8dmgLF8oP6zYcQMKb5A",
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzM5YzNiNGI0ZGY1MzQxY2ZkYWZhZDdjZjM0YzJlNSIsInN1YiI6IjY2MGM2ZmQyMzU4MThmMDE2MjM5ZDMwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TbIk8i4m4enYkLh9MTz02xkR8dmgLF8oP6zYcQMKb5A",
 };
 
 export const searchTrendingMovies = async () => {
