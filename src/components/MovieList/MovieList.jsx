@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import css from "./MovieList.module.css";
 
 const MovieList = ({ movies }) => {
+  const history = useHistory();
+
+  const handleMovieClick = (movie) => {
+    history.push({
+      pathname: `/movies/${movie.id}`,
+      state: { from: "movieList" } 
+    });
+  };
+
   return (
     <div className={css.section}>
       <ul className={css.list}>
@@ -9,7 +18,9 @@ const MovieList = ({ movies }) => {
           movies.map((movie) => {
             return (
               <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+                <button onClick={() => handleMovieClick(movie)}>
+                  {movie.title}
+                </button>
               </li>
             );
           })}
@@ -19,3 +30,4 @@ const MovieList = ({ movies }) => {
 };
 
 export default MovieList;
+
