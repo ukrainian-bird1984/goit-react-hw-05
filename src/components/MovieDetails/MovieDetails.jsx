@@ -1,3 +1,5 @@
+import css from "./MovieDetails.module.css";
+
 const MovieDetails = ({ movies }) => {
   const { poster_path, title, release_date, vote_average, overview, genres } =
     movies;
